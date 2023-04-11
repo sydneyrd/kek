@@ -11,15 +11,20 @@
 
 
 
+
 .face {
   background-color: #bfffcb;
-  min-width:45%;
+  min-width: 45%;
   min-height: 45%;
-  display:flex;
-  flex-direction:column;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
+.expression{
+  font-size:10em;
+}
 .input--and--button {
   margin-top: 10em;
   display: flex;
