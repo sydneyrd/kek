@@ -1,38 +1,65 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color:#62c4ad;
   display: flex;
+  height: 100vh;
+  width: 100vw;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+
+
+
+.face {
+  background-color: #bfffcb;
+  min-width:45%;
+  min-height: 45%;
+  display:flex;
+  flex-direction:column;
+
+}
+
+.input--and--button {
+  margin-top: 10em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+  color:white;
+
+  min-width:45%;
+  align-items: center; /* add this to center the elements vertically */
+}
+
+.input--and--button input {
+  flex: 1; /* add this to make the input element take up all available space */
+
+
+padding: 6px 12px;
+background: rgb(31, 32, 35);
+border: 1px solid rgb(60, 63, 68);
+border-radius: 4px;
+font-size: 13px;
+color: rgb(247, 248, 248);
+height: 46px;
+appearance: none;
+transition: border 0.15s ease 0s;}
+:focus{
+    outline: none;
+    box-shadow: none;
+    border-color: rgb(100, 153, 255);
+}
+
+.input--and--button button {
+  margin-left: 1em; /* add some margin to the left of the button */
+}
+button {
+  border: solid black 2px;
+  border-radius: 50%;
+  background-color: indigo;
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  padding: 1em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  font-size:larger;
 }
