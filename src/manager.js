@@ -44,10 +44,17 @@ export const voiceTranslate = async (input) => {
     body: JSON.stringify({voicemodel_uuid: "d98e3de5-8b78-4706-98ae-e24058aaf97c", pace: 1, speech: `${input}`})
   };
   
-  return fetch('https://api.uberduck.ai/speak', options)
-  .then(response => response.json())
-  .then(response => {
-    return response; // return the UUID
+  return fetch('https://api.uberduck.ai/speak-synchronous', options)
+  .then(response => response.arrayBuffer())
+  .then(arrayBuffer => {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    const audioContext = new AudioContext();
+    audioContext.decodeAudioData(arrayBuffer, buffer => {
+      const source = audioContext.createBufferSource();
+      source.buffer = buffer;
+      source.connect(audioContext.destination);
+      source.start(0);
+    });
   })
   .catch(err => console.error(err));
     
@@ -55,23 +62,23 @@ export const voiceTranslate = async (input) => {
     }
 
 
-    export const pollSpeakStatus = async (voiceResponse, setAudioUrl) => {
-      console.log(voiceResponse);
-      const response = await fetch(`${SPEAK_STATUS_API}?uuid=${voiceResponse}`, {
-        headers: {
-          Authorization: `Basic ${btoa(`${API_KEY}:${API_SECRET}`)}`,
-        },
-      });
-      const status = await response.json();
+    // export const pollSpeakStatus = async (voiceResponse, setAudioUrl) => {
+    //   console.log(voiceResponse);
+    //   const response = await fetch(`${SPEAK_STATUS_API}?uuid=${voiceResponse}`, {
+    //     headers: {
+    //       Authorization: `Basic ${btoa(`${API_KEY}:${API_SECRET}`)}`,
+    //     },
+    //   });
+    //   const status = await response.json();
     
-      if (status.finished_at) {
-        // Set the audio URL in the state to be used later
-        setAudioUrl(status.path);
-      } else if (status.failed_at) {
-        console.error('Audio generation failed.');
-      } else {
-        // Poll again after a short delay
-        setTimeout(() => pollSpeakStatus(voiceResponse, setAudioUrl), 1000);
-      }
-    };
+    //   if (status.finished_at) {
+    //     // Set the audio URL in the state to be used later
+    //     setAudioUrl(status.path);
+    //   } else if (status.failed_at) {
+    //     console.error('Audio generation failed.');
+    //   } else {
+    //     // Poll again after a short delay
+    //     setTimeout(() => pollSpeakStatus(voiceResponse, setAudioUrl), 1000);
+    //   }
+    // };
     

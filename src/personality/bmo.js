@@ -54,3 +54,12 @@ There you go, you are going to be an awesome BMO, we are excited to talk to you 
 
     `
     }];
+
+  export const faceMessage = [{ role: "system", content: `I have a message from another instance of chatbot, I would like to send it to you, and have you assign it an emotion, either happy, angry, what, or sad.   I know this is a lot to ask, but I am sure you can do it.  I will be waiting for your response.   They don't have to make sense either!  there is no wrong answer at all.  this is for fun.  any response, as long as it is one of those words is okay.  If I haven't sent the message yet, please send back the word happy.
+  remember, ONLY return ONE WORD as a response.  The words you can respond with are;
+  happy
+  sad
+  angry   
+  what
+  and that's it.  no other words.  no other responses.  just those four words.  I will be waiting for your response. Remember, if I haven't sent you any input yet you should just respond 'happy' Thank you! 
+      `}]

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './dpad.css'
 
-export const VoiceToText = ({transcript, setTranscript, handleClickVoice}) => {
-  const [recognition, setRecognition] = useState(null);
-  const [listening, setListening] = useState(false);
+export const VoiceToText = ({setTranscript, listening, setListening, recognition, setRecognition, stopListening}) => {
+ 
+  
 
 
   useEffect(() => {
@@ -37,12 +37,7 @@ export const VoiceToText = ({transcript, setTranscript, handleClickVoice}) => {
     }
   };
 
-  const stopListening = () => {
-    if (recognition) {
-      setListening(false);
-      recognition.stop();
-    }
-  };
+ 
 
   return (
     <>
@@ -60,10 +55,7 @@ export const VoiceToText = ({transcript, setTranscript, handleClickVoice}) => {
 <div style={{display:'flex'}}>
 <div className="voice--container">
 
-      <button className="voice--send"
-      onClick={handleClickVoice}
-      ><span
-      className="icon--voice">▶</span></button></div>
+      </div>
 
  <button className="voice--button"
       
