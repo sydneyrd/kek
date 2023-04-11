@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './dpad.css'
 
 export const VoiceToText = ({transcript, setTranscript, handleClickVoice}) => {
   const [recognition, setRecognition] = useState(null);
@@ -45,16 +46,33 @@ export const VoiceToText = ({transcript, setTranscript, handleClickVoice}) => {
 
   return (
     <>
-      <button className="voice--button"
+     
+      
+
+      <div class="d-pad">
+  <div class="d-pad-button up"></div>
+  <div class="d-pad-button right"></div>
+  <div class="d-pad-button down"></div>
+  <div class="d-pad-button left"></div>
+  <div class="d-pad-center"></div>
+</div>
+
+<div style={{display:'flex'}}>
+<div className="voice--container">
+
+      <button className="voice--send"
+      onClick={handleClickVoice}
+      ><span
+      className="icon--voice">▶</span></button></div>
+
+ <button className="voice--button"
       
       onClick={listening ? stopListening : startListening}>
         {listening ? '🛑' : '🎤'}
       </button>
-      <p>{transcript}</p>
-      <button className="voice--send"
-      onClick={handleClickVoice}
-      >send voice</button>
-      {console.log(transcript)}</>
+</div>
+
+      </>
   );
 };
 

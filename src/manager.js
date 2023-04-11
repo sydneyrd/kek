@@ -47,7 +47,6 @@ export const voiceTranslate = async (input) => {
   return fetch('https://api.uberduck.ai/speak', options)
   .then(response => response.json())
   .then(response => {
-    console.log(response);
     return response; // return the UUID
   })
   .catch(err => console.error(err));

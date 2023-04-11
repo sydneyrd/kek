@@ -10,7 +10,7 @@
 }
 
 .voice--button{
-  background-color: #d51519;
+  background-color: #09f62f;
   border: 3px solid black;
   border-radius: 50%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
@@ -20,13 +20,44 @@
   justify-content: center;
   align-items: center;
   font-size: 16px;
-  height: 50px;
-  width: 50px;
+  height: 60px;
+  width: 60px;
+  margin-top:4em;
+  padding:1em;
+  margin-left:2em;
 }
 .voice--send{
 /* //triangle button */
-}
+position:relative;
+background-color:transparent;
+margin-top:6em;
 
+}
+.voice--container{
+  color: white;
+  width: 0px;
+  height: 0px;
+  border: 55px solid black;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: rgb(4 106 186);
+  border-left-color: transparent;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  
+}
+.icon--voice{
+  margin-top:1em;
+}
+.buttons--container{
+  display:flex;
+  overflow: visible;
+  margin-top:2em;
+width:65em;
+  justify-content:space-between;
+
+}
 .face {
   background-color: #bfffcb;
   min-width: 45%;
@@ -35,6 +66,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px inset, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px inset;
 }
 
 .expression{
@@ -74,12 +106,12 @@ transition: border 0.15s ease 0s;}
 .input--and--button button {
   margin-left: 1em; /* add some margin to the left of the button */
 }
-button {
+.send--text {
   border: solid black 2px;
   border-radius: 50%;
   background-color: indigo;
   color: white;
   padding: 1em;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  font-size:larger;
+  font-size:large;
 }
