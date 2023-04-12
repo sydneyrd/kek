@@ -1,7 +1,7 @@
 const key = process.env.REACT_APP_OPENAI_API_KEY
 const API_KEY = process.env.REACT_APP_DUCK_KEY;
 const API_SECRET = process.env.REACT_APP_DUCK_SECRET;
-
+const cors_key = process.env.REACT_APP_CORS_KEY;
 
 export const getResponse = async (input) => {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -25,10 +25,11 @@ export const voiceTranslate = async (input) => {
   const options = {
     method: 'POST',
     headers: {
-      accept: 'application/json',
+      'x-cors-api-key': 'cors_key',
+      'accept': 'application/json',
       'uberduck-id': 'anond98e3de5-8b78-4706-98ae-e24058aaf97cymous',
       'content-type': 'application/json',
-      authorization: 'Basic ' + btoa(API_KEY + ':' + API_SECRET)
+      'authorization': 'Basic' + btoa(API_KEY + ':' + API_SECRET)
     },
     body: JSON.stringify({voicemodel_uuid: "d98e3de5-8b78-4706-98ae-e24058aaf97c", pace: 1, speech: `${input}`})
   };

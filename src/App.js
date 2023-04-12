@@ -49,6 +49,7 @@ function App() {
       
     }, [messages]);
   
+ //on first render, have a pop up that gives instructions/link? 
  
     const handleClick = async (e) => {
       e.preventDefault();
