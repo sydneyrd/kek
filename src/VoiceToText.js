@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './dpad.css'
 
 export const VoiceToText = ({setTranscript, listening, setListening, recognition, setRecognition, stopListening}) => {
- 
-  
-
 
   useEffect(() => {
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
@@ -36,13 +33,9 @@ export const VoiceToText = ({setTranscript, listening, setListening, recognition
     }
   };
 
- 
 
   return (
     <>
-     
-      
-
       <div className="d-pad">
   <div className="d-pad-button up"></div>
   <div className="d-pad-button right"></div>
@@ -51,10 +44,10 @@ export const VoiceToText = ({setTranscript, listening, setListening, recognition
   <div className="d-pad-center"></div>
 </div>
 
-<div style={{display:'flex'}}>
+<div  style={{ display: 'flex', flexWrap: 'wrap' }}>
 <div className="voice--container">
 
-      </div>
+</div>
 
  <button className="voice--button"
       

@@ -4,7 +4,6 @@ import './LoadingEllipsis.css';
 import { LoadingEllipsis } from './LoadingEllipses';
 import { getResponse, voiceTranslate } from './manager';
 import {personality} from './personality/bmo';
-import { FACES } from './personality/faces';
 import {VoiceToText} from './VoiceToText'
 
 
@@ -12,35 +11,23 @@ import {VoiceToText} from './VoiceToText'
 function App() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState(personality);
-  const [response, setResponse] = useState({});
   const [transcript, setTranscript] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  // const [message, setMessage] = useState(faceMessage);
   const [showFace, setShowFace] = useState('');
   const [listening, setListening] = useState(false);
-  const [recognition, setRecognition] = useState(null);
+  const [recognition, setRecognition] = useState(null);          
+            
   
-function getRandomFace(mood) {
-              if (mood in FACES) {
-                const faces = FACES[mood];
-                const randomIndex = Math.floor(Math.random() * faces.length);
-                return faces[randomIndex].face;
-              }
-
-            else {return "(´◡`)";}  
-            }
-  
-          
-            function removeBracketContent(str) {
+  function removeBracketContent(str) {
               const regex = /\[(.*?)\]/g;
               const strWithoutBracket = str.replace(regex, '').trim();
               return [strWithoutBracket, regex.exec(str)?.[1] ?? ''];
             }
             
 
-  const stopListening = () => {
+  const stopListening = async () => {
     if (recognition) {
-      setListening(false);
+     await setListening(false);
       recognition.stop();
     }
   };
@@ -56,7 +43,6 @@ function getRandomFace(mood) {
           const res = await voiceTranslate(stringWithoutEmoticon);
           setMessages((prevMessages) => [...prevMessages, chatresponse.message]);
           setIsLoading(false);
-        //  await getFace(chatresponse.message)
         }
       };
       processChatbotResponse();
@@ -64,20 +50,22 @@ function getRandomFace(mood) {
     }, [messages]);
   
  
-const handleClick = async (e) => {
+    const handleClick = async (e) => {
       e.preventDefault();
-      stopListening();
-      let copy = { role: "user", content: ""}
-      if (input != ""){copy = { role: "user", content: input }}
-      if (transcript != '') {copy = { role: "user", content: transcript }}
-      setMessages([...messages, copy]);
-      
-      setInput('');
-      setTranscript('');
+      if (listening) {
+        stopListening();
+      }
+      let copy = { role: "user", content: "" };
+      if (input !== "") {
+        copy = { role: "user", content: input };
+      }
+      if (transcript !== "") {
+        copy = { role: "user", content: transcript };
+      }
+      setMessages((prevMessages) => [...prevMessages, copy]);
+      setInput("");
+      setTranscript("");
     };
-
-
-
 
 return (
   <div className="App">

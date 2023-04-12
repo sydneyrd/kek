@@ -10,7 +10,15 @@ App {
 
 .root{
   background-color:#62c4ad;
+  height:100%;
+  width:100%;
   display:flex;
+}
+
+body{
+  background-color:#62c4ad;
+  height:100vh;
+  width:100vw;
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

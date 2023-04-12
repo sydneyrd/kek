@@ -7,6 +7,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-wrap:nowrap;
 }
 
 .voice--button{
@@ -22,9 +23,8 @@
   font-size: 16px;
   height: 60px;
   width: 60px;
-  margin-top:4em;
-  padding:1em;
-  margin-left:2em;
+  margin-top:6em;
+  
 }
 .voice--send{
 /* //triangle button */
@@ -53,14 +53,13 @@ margin-top:6em;
 .buttons--container{
   display:flex;
   overflow: visible;
-  margin-top:2em;
-width:65em;
+min-width:75%;
   justify-content:space-between;
 
 }
 .face {
   background-color: #bfffcb;
-  min-width: 45%;
+  min-width: 75%;
   min-height: 45%;
   display: flex;
   flex-direction: column;
@@ -70,11 +69,11 @@ width:65em;
 }
 
 .expression{
-  font-size:10em;
+  font-size:15vw;
   width:fit-content;
   height:fit-content;}
 .input--and--button {
-  margin-top: 10em;
+  margin-top: 2em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
