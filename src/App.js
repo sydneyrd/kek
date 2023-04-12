@@ -3,7 +3,7 @@ import './App.css';
 import './LoadingEllipsis.css';
 import { LoadingEllipsis } from './LoadingEllipses';
 import { getResponse, voiceTranslate } from './manager';
-import {personality, faceMessage} from './personality/bmo';
+import {personality} from './personality/bmo';
 import { FACES } from './personality/faces';
 import {VoiceToText} from './VoiceToText'
 
@@ -15,7 +15,7 @@ function App() {
   const [response, setResponse] = useState({});
   const [transcript, setTranscript] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState(faceMessage);
+  // const [message, setMessage] = useState(faceMessage);
   const [showFace, setShowFace] = useState('');
   const [listening, setListening] = useState(false);
   const [recognition, setRecognition] = useState(null);
@@ -30,20 +30,14 @@ function getRandomFace(mood) {
             else {return "(´◡`)";}  
             }
   
-// const getFace = async (inputMessage) => {
-//   if (inputMessage.content){
-//           setMessage([...message, inputMessage]);
-//          await getEmotionResponse(message).then(
-//               (res) => {
-//                 console.log(res.message.content);
-                 
-//                         setShowFace(getRandomFace(res.message.content));
-                      
           
-//               }
-//           );
-// }
-//   }
+            function removeBracketContent(str) {
+              const regex = /\[(.*?)\]/g;
+              const strWithoutBracket = str.replace(regex, '').trim();
+              return [strWithoutBracket, regex.exec(str)?.[1] ?? ''];
+            }
+            
+
   const stopListening = () => {
     if (recognition) {
       setListening(false);
@@ -56,8 +50,10 @@ function getRandomFace(mood) {
         if (messages.length > 0 && messages[messages.length - 1].role === 'user') {
           setIsLoading(true);
           const chatresponse = await getResponse(messages);
-          setResponse(chatresponse.message);
-          const res = await voiceTranslate(chatresponse.message.content);
+          const [stringWithoutEmoticon, emoticon] = removeBracketContent(chatresponse.message.content);
+          console.log(emoticon)
+          setShowFace(emoticon)
+          const res = await voiceTranslate(stringWithoutEmoticon);
           setMessages((prevMessages) => [...prevMessages, chatresponse.message]);
           setIsLoading(false);
         //  await getFace(chatresponse.message)

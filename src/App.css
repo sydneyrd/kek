@@ -71,7 +71,8 @@ width:65em;
 
 .expression{
   font-size:10em;
-}
+  width:fit-content;
+  height:fit-content;}
 .input--and--button {
   margin-top: 10em;
   display: flex;
