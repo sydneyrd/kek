@@ -30,7 +30,7 @@ export const voiceTranslate = async (input) => {
       'uberduck-id': 'anond98e3de5-8b78-4706-98ae-e24058aaf97cymous',
       'content-type': 'application/json',
       authorization: 'Basic ' + btoa(API_KEY + ':' + API_SECRET),
-      Origin: 'https://bmo-0g4t.onrender.com/'
+      origin: 'https://bmo-0g4t.onrender.com/'
     },
     body: JSON.stringify({voicemodel_uuid: "d98e3de5-8b78-4706-98ae-e24058aaf97c", pace: 1, speech: `${input}`})
   };
