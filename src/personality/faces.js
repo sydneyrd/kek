@@ -44,6 +44,16 @@ export const FACES = {
     {
         face: '♪(´▽｀)'
     },
+    {
+        face: ' ￣︶￣ '
+    },
+    {
+        face: ' ◕‿◕ '
+       
+    },
+    {
+        face: ' ´◡` '
+    }
     ],
     'sad': [
         {

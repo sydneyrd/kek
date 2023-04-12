@@ -8,6 +8,10 @@ App {
   
 }
 
+.root{
+  background-color:#62c4ad;
+  display:flex;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

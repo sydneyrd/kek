@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import './App.css';
 import './LoadingEllipsis.css';
 import { LoadingEllipsis } from './LoadingEllipses';
-import { FaceHandler } from './personality/FaceHandler';
-import { getResponse, voiceTranslate, pollSpeakStatus } from './manager';
+import { getResponse, voiceTranslate } from './manager';
 import {personality} from './personality/bmo';
 import { FACES } from './personality/faces';
+import {VoiceToText} from './VoiceToText'
 
 
 
@@ -13,85 +13,69 @@ function App() {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState(personality);
   const [response, setResponse] = useState({});
-  const [audioUrl, setAudioUrl] = useState(null);
-  const [uuid, setUuid] = useState(null);
+  const [transcript, setTranscript] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [face, setFace] = useState(null);
-  const [message, setMessage] = useState([{ role: "system", content: `I have a message from another instance of chatbot, I would like to send it to you, and have you assign it an emotion, either happy, angry, what, or sad.   I know this is a lot to ask, but I am sure you can do it.  I will be waiting for your response.   They don't have to make sense either!  there is no wrong answer at all.  this is for fun.  any response, as long as it is one of those words is okay.  If I haven't sent the message yet, please send back the word happy.
-  
-  remember, ONLY return ONE WORD as a response.
-  the words you can respond with are
-  
-  happy
-  sad
-  angry   
-  what
-  and that's it.  no other words.  no other responses.  just those four words.  I will be waiting for your response. Remember, if I haven't sent you any input yet you should just respond 'happy' Thank you! 
-      `}]);
+  // const [message, setMessage] = useState(faceMessage);
   const [showFace, setShowFace] = useState('');
+  const [listening, setListening] = useState(false);
+  const [recognition, setRecognition] = useState(null);
   
-   function getRandomFace(mood) {
+function getRandomFace(mood) {
               if (mood in FACES) {
                 const faces = FACES[mood];
                 const randomIndex = Math.floor(Math.random() * faces.length);
                 return faces[randomIndex].face;
               }
-              return "(❁´◡`❁)";
+
+            else {return "(´◡`)";}  
             }
   
-const getFace = () => {
-          setMessage([...message, response]);
-          getResponse(message).then(
-              (res) => {
-                console.log(res.message.content)
-                  setFace(res.message.content);
-                  console.log(face)
-              }
-          );
-         const result = getRandomFace(face);
-         setShowFace(result);
-  }
-  
-  
+          
+            function removeBracketContent(str) {
+              const regex = /\[(.*?)\]/g;
+              const strWithoutBracket = str.replace(regex, '').trim();
+              return [strWithoutBracket, regex.exec(str)?.[1] ?? ''];
+            }
+            
 
-
+  const stopListening = () => {
+    if (recognition) {
+      setListening(false);
+      recognition.stop();
+    }
+  };
     useEffect(() => {
       const processChatbotResponse = async () => {
         
         if (messages.length > 0 && messages[messages.length - 1].role === 'user') {
           setIsLoading(true);
           const chatresponse = await getResponse(messages);
-          setResponse(chatresponse.message);
-  
-          const res = await voiceTranslate(chatresponse.message.content);
-          setUuid(res);
-          pollSpeakStatus(res.uuid, setAudioUrl);
-  
+          const [stringWithoutEmoticon, emoticon] = removeBracketContent(chatresponse.message.content);
+          console.log(emoticon)
+          setShowFace(emoticon)
+          const res = await voiceTranslate(stringWithoutEmoticon);
           setMessages((prevMessages) => [...prevMessages, chatresponse.message]);
           setIsLoading(false);
+        //  await getFace(chatresponse.message)
         }
       };
-  
       processChatbotResponse();
       
     }, [messages]);
   
  
-    const handleClick = async (e) => {
+const handleClick = async (e) => {
       e.preventDefault();
-      
-      let copy = { role: "user", content: input };
+      stopListening();
+      let copy = { role: "user", content: ""}
+      if (input != ""){copy = { role: "user", content: input }}
+      if (transcript != '') {copy = { role: "user", content: transcript }}
       setMessages([...messages, copy]);
-      getFace();
+      
+      setInput('');
+      setTranscript('');
     };
-  
- 
-  
-  
-useEffect(() => {
-  const audio = new Audio(audioUrl);
-    audio.play();
-}, [audioUrl]);
+
 
 
 
@@ -107,9 +91,11 @@ return (
 
     <div className="input--and--button">
       <input type="text" value={input} onChange={(e) => setInput(e.target.value)} />
-      <button onClick={(click) => handleClick(click)}></button>
+      <button className='send--text' onClick={(click) => handleClick(click)}>▶</button>
     </div>
-  </div>
+    <div className="buttons--container">
+    <VoiceToText stopListening={stopListening} recognition={recognition} setRecognition={setRecognition} setTranscript={setTranscript}  listening={listening} setListening={setListening}/>
+  </div></div>
 );
       }
 
