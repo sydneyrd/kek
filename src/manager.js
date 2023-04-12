@@ -1,17 +1,9 @@
-
-
-
 const key = process.env.REACT_APP_OPENAI_API_KEY
-
-
-
 const API_KEY = process.env.REACT_APP_DUCK_KEY;
-    const API_SECRET = process.env.REACT_APP_DUCK_SECRET;
+const API_SECRET = process.env.REACT_APP_DUCK_SECRET;
 
 
-
-
-   export const getResponse = async (input) => {
+export const getResponse = async (input) => {
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -41,7 +33,7 @@ export const voiceTranslate = async (input) => {
     body: JSON.stringify({voicemodel_uuid: "d98e3de5-8b78-4706-98ae-e24058aaf97c", pace: 1, speech: `${input}`})
   };
   
-  return fetch('https://api.uberduck.ai/speak-synchronous', options)
+  return fetch('https://proxy.cors.sh/https://api.uberduck.ai/speak-synchronous', options)
   .then(response => response.arrayBuffer())
   .then(arrayBuffer => {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
