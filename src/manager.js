@@ -7,8 +7,7 @@ const key = process.env.REACT_APP_OPENAI_API_KEY
 
 const API_KEY = process.env.REACT_APP_DUCK_KEY;
     const API_SECRET = process.env.REACT_APP_DUCK_SECRET;
-    const SPEAK_API = 'https://api.uberduck.ai/speak';
-    const SPEAK_STATUS_API = 'https://api.uberduck.ai/speak-status';
+
 
 
 
@@ -37,7 +36,7 @@ export const voiceTranslate = async (input) => {
       accept: 'application/json',
       'uberduck-id': 'anond98e3de5-8b78-4706-98ae-e24058aaf97cymous',
       'content-type': 'application/json',
-      authorization: 'Basic cHViX29qYnVkYWVzbGZodXdidXRjazpwa183MmY0ODljOC1jNzI0LTQ3OTItOGUzNy04OTVjYjRmY2VmYjA='
+      authorization: 'Basic ' + btoa(API_KEY + ':' + API_SECRET)
     },
     body: JSON.stringify({voicemodel_uuid: "d98e3de5-8b78-4706-98ae-e24058aaf97c", pace: 1, speech: `${input}`})
   };
