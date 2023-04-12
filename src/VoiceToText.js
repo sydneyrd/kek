@@ -25,7 +25,6 @@ export const VoiceToText = ({setTranscript, listening, setListening, recognition
     if (recognition) {
       setListening(true);
       recognition.start();
-
       recognition.onresult = (event) => {
         const currentResult = event.results[event.results.length - 1];
         if (currentResult.isFinal) {
@@ -44,12 +43,12 @@ export const VoiceToText = ({setTranscript, listening, setListening, recognition
      
       
 
-      <div class="d-pad">
-  <div class="d-pad-button up"></div>
-  <div class="d-pad-button right"></div>
-  <div class="d-pad-button down"></div>
-  <div class="d-pad-button left"></div>
-  <div class="d-pad-center"></div>
+      <div className="d-pad">
+  <div className="d-pad-button up"></div>
+  <div className="d-pad-button right"></div>
+  <div className="d-pad-button down"></div>
+  <div className="d-pad-button left"></div>
+  <div className="d-pad-center"></div>
 </div>
 
 <div style={{display:'flex'}}>

@@ -31,6 +31,22 @@ const API_KEY = process.env.REACT_APP_DUCK_KEY;
     };
 
 
+    export const getEmotionResponse = async (input) => {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${key}`,
+        },
+        body: JSON.stringify({
+          model: "gpt-3.5-turbo",
+          messages: input,
+          temperature: 0.6,
+        }),
+      });
+      const data = await response.json();
+      return data.choices[0];
+      };
 
 export const voiceTranslate = async (input) => {
   const options = {

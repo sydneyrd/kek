@@ -14,10 +14,7 @@ function App() {
   const [messages, setMessages] = useState(personality);
   const [response, setResponse] = useState({});
   const [transcript, setTranscript] = useState('');
-  const [audioUrl, setAudioUrl] = useState(null);
-  // const [uuid, setUuid] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [face, setFace] = useState('');
   const [message, setMessage] = useState(faceMessage);
   const [showFace, setShowFace] = useState('');
   const [listening, setListening] = useState(false);
@@ -29,22 +26,24 @@ function getRandomFace(mood) {
                 const randomIndex = Math.floor(Math.random() * faces.length);
                 return faces[randomIndex].face;
               }
-              return "(´◡`)";
+
+            else {return "(´◡`)";}  
             }
   
-const getFace = (inputMessage) => {
-  if (inputMessage.content !== ""){
-          setMessage([...message, input]);
-          getResponse(message).then(
-              (res) => {
-                console.log(res.message.content);
-                  setFace(res.message.content);
-                  console.log(face);
-              }
-          );
-         const result = getRandomFace(face);
-         setShowFace(result);}
-  }
+// const getFace = async (inputMessage) => {
+//   if (inputMessage.content){
+//           setMessage([...message, inputMessage]);
+//          await getEmotionResponse(message).then(
+//               (res) => {
+//                 console.log(res.message.content);
+                 
+//                         setShowFace(getRandomFace(res.message.content));
+                      
+          
+//               }
+//           );
+// }
+//   }
   const stopListening = () => {
     if (recognition) {
       setListening(false);
@@ -58,16 +57,12 @@ const getFace = (inputMessage) => {
           setIsLoading(true);
           const chatresponse = await getResponse(messages);
           setResponse(chatresponse.message);
-  
           const res = await voiceTranslate(chatresponse.message.content);
-          // setUuid(res);
-          // pollSpeakStatus(res.uuid, setAudioUrl);
-  
           setMessages((prevMessages) => [...prevMessages, chatresponse.message]);
           setIsLoading(false);
+        //  await getFace(chatresponse.message)
         }
       };
-  
       processChatbotResponse();
       
     }, [messages]);
@@ -76,27 +71,17 @@ const getFace = (inputMessage) => {
 const handleClick = async (e) => {
       e.preventDefault();
       stopListening();
-      let copy = {}
+      let copy = { role: "user", content: ""}
       if (input != ""){copy = { role: "user", content: input }}
-      else {copy = { role: "user", content: transcript }}
+      if (transcript != '') {copy = { role: "user", content: transcript }}
       setMessages([...messages, copy]);
-      getFace(response);
+      
       setInput('');
       setTranscript('');
     };
 
-useEffect(() => {
-  const audio = new Audio(audioUrl);
-    audio.play();
-}, [audioUrl]);
 
-// const handleClickVoice = async (e) => {
-//   e.preventDefault();
-//   let copy = { role: "user", content: transcript };
-//   setMessages([...messages, copy]);
-//   getFace(response);
-//   setTranscript('')
-// };
+
 
 return (
   <div className="App">
